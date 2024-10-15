@@ -25,6 +25,12 @@ body {
     flex: 1;
 }
 
+.nav-active {
+    font-weight: bold;
+    color: #000; /* Or whatever color you want */
+}
+
+
 footer {
     position: relative;
     bottom: 0;
