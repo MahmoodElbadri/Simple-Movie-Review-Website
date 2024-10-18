@@ -4,6 +4,7 @@ using Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Entities.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241018161731_ImageFileAddedToMovie")]
+    partial class ImageFileAddedToMovie
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -218,6 +221,28 @@ namespace Entities.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Entities.MovieWithReviewsAndGenreDto", b =>
+                {
+                    b.Property<string>("GenreName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("MovieId")
+                        .HasColumnType("int");
+
+                    b.Property<float?>("Rating")
+                        .HasColumnType("real");
+
+                    b.Property<DateTime>("ReleaseDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToTable("MovieWithReviewsAndGenreDtos");
+                });
+
             modelBuilder.Entity("Entities.Review", b =>
                 {
                     b.Property<int>("ReviewId")
@@ -255,7 +280,7 @@ namespace Entities.Migrations
                         {
                             ReviewId = 1,
                             Comment = "Amazing movie! A must-watch for sci-fi fans.",
-                            CreatedAt = new DateTime(2024, 10, 18, 19, 28, 14, 449, DateTimeKind.Local).AddTicks(6744),
+                            CreatedAt = new DateTime(2024, 10, 18, 19, 17, 30, 511, DateTimeKind.Local).AddTicks(2601),
                             MovieId = 1,
                             Rating = 5f,
                             UserId = "testuser1"
@@ -264,11 +289,32 @@ namespace Entities.Migrations
                         {
                             ReviewId = 2,
                             Comment = "An iconic masterpiece of cinema.",
-                            CreatedAt = new DateTime(2024, 10, 18, 19, 28, 14, 449, DateTimeKind.Local).AddTicks(6750),
+                            CreatedAt = new DateTime(2024, 10, 18, 19, 17, 30, 511, DateTimeKind.Local).AddTicks(2606),
                             MovieId = 2,
                             Rating = 5f,
                             UserId = "testuser2"
                         });
+                });
+
+            modelBuilder.Entity("Entities.ReviewDto", b =>
+                {
+                    b.Property<string>("Comment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<float?>("Rating")
+                        .HasColumnType("real");
+
+                    b.Property<int>("ReviewId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToTable("ReviewDto");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

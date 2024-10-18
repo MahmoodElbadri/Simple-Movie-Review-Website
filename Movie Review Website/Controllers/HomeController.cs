@@ -6,6 +6,7 @@ using System.Diagnostics;
 namespace Movie_Review_Website.Controllers;
 
 [AllowAnonymous]
+[Route("[controller]/[action]")]
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
@@ -21,6 +22,11 @@ public class HomeController : Controller
     }
 
     public IActionResult Privacy()
+    {
+        return View();
+    }
+
+    public IActionResult NotFound()
     {
         return View();
     }

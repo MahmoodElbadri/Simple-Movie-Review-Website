@@ -23,6 +23,8 @@ namespace Entities
         [DataType(DataType.Currency)]
         public float AverageRating { get; set; }
         public List<Review>? Reviews { get; set; }
+
+        public string? ImagePath { get; set; }
         public override string ToString()
         {
             return $"{Title}";

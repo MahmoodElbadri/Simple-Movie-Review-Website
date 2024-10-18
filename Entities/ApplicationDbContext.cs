@@ -16,7 +16,6 @@ namespace Entities
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Genre> Genres { get; set; }
-        public DbSet<MovieWithReviewsAndGenreDto> MovieWithReviewsAndGenreDtos { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
@@ -24,8 +23,6 @@ namespace Entities
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<MovieWithReviewsAndGenreDto>().HasNoKey();
-            modelBuilder.Entity<ReviewDto>().HasNoKey();
 
             modelBuilder.Entity<Movie>()
         .HasOne(m => m.Genre)

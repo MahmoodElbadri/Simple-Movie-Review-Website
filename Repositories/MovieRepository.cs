@@ -68,25 +68,9 @@ namespace Repositories
         public async Task UpdateAsync(Movie movie)
         {
             _logger.LogInformation($"Updating movie with id: {movie.MovieId}");
-            Movie? existMovie = await GetByIdAsync(movie.MovieId);
-            try
-            {
-                if (existMovie != null)
-                {
-                    _db.Movies.Update(movie);
-                    await _db.SaveChangesAsync();
-                    _logger.LogInformation("Movie updated");
-                }
-                else
-                {
-                    _logger.LogWarning("Movie not found");
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "An error occurred while updating the movie");
-                throw;
-            }
+            _db.Movies.Update(movie);
+            await _db.SaveChangesAsync();
+            _logger.LogInformation("Movie updated");
         }
     }
 }

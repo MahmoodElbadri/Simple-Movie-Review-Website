@@ -60,6 +60,11 @@ if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
 }
+else
+{
+    app.UseExceptionHandler("/Home/Error");
+    app.UseStatusCodePagesWithReExecute("/Home/NotFound");
+}
 app.UseStaticFiles();
 
 app.UseRouting();

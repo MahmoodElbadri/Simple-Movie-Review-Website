@@ -48,7 +48,20 @@ namespace Services
         public async Task UpdateMovieAsync(Movie movie)
         {
             _logger.LogInformation("Updating movie");
-            await _repo.UpdateAsync(movie);
+            Movie? existingMovie = await _repo.GetByIdAsync(movie.MovieId);
+            if (existingMovie == null)
+            {
+                _logger.LogError("Movie not found");
+                throw new Exception("Movie not found");
+            }
+            existingMovie.Title = movie.Title;
+            existingMovie.GenreId = movie.GenreId;
+            existingMovie.Genre = movie.Genre;
+            existingMovie.Description = movie.Description;
+            existingMovie.AverageRating = movie.AverageRating;
+            existingMovie.ReleaseDate = movie.ReleaseDate;
+            existingMovie.ImagePath = movie.ImagePath;
+            await _repo.UpdateAsync(existingMovie);
             _logger.LogInformation("Movie updated");
         }
     }

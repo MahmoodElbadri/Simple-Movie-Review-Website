@@ -30,6 +30,22 @@ body {
     color: #000; /* Or whatever color you want */
 }
 
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-link {
+    display: inline-flex;
+    align-items: center;
+}
+
+.card-link i {
+        margin-right: 5px;
+}
+
+
 
 footer {
     position: relative;
