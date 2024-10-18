@@ -1,6 +1,7 @@
 ﻿using Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Movie_Review_Website.Models;
 using ServiceContracts;
 
 namespace Movie_Review_Website.Controllers
@@ -38,6 +39,15 @@ namespace Movie_Review_Website.Controllers
             if (review.Comment.IsNullOrEmpty() || !ModelState.IsValid)
             {
                 _logger.LogWarning($"After validation the review is not valid");
+                ViewBag.movies = await _movieService.GetAllMoviesAsync();
+                return View(review);
+            }
+            Movie movie = await _movieService.GetMovieByIdAsync(review.MovieId);
+            review.Movie = await _movieService.GetMovieByIdAsync(review.MovieId);
+            if(movie == null)
+            {
+                _logger.LogWarning($"After validation the review is not valid cause the movie id is not found");
+                ModelState.AddModelError("","Invalid movie id");
                 ViewBag.movies = await _movieService.GetAllMoviesAsync();
                 return View(review);
             }

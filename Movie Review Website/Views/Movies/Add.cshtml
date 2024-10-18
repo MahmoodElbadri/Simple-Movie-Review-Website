@@ -35,7 +35,12 @@
     <div class="form-group">
         <label asp-for="Reviews" class="control-label"></label>
         <textarea asp-for="Reviews" type="text" class="form-control" ></textarea>
-        <span asp-validation-for="ReleaseDate" class="text-danger"></span>
+        <span asp-validation-for="Reviews" class="text-danger"></span>
+    </div>
+    <div class="for-group"> 
+        <label asp-for="AverageRating" class="control-label"></label>
+        <input asp-for="AverageRating" type="number" class="form-control" />
+        <span asp-validation-for="AverageRating" class="text-danger"></span>
     </div>
     <button type="submit" class="btn btn-success mt-4 mb-4">Save</button>
     <div asp-validation-summary="All" class="text-danger"></div>

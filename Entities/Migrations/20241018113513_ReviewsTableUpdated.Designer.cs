@@ -4,6 +4,7 @@ using Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Entities.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241018113513_ReviewsTableUpdated")]
+    partial class ReviewsTableUpdated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -252,7 +255,7 @@ namespace Entities.Migrations
                         {
                             ReviewId = 1,
                             Comment = "Amazing movie! A must-watch for sci-fi fans.",
-                            CreatedAt = new DateTime(2024, 10, 18, 14, 35, 54, 829, DateTimeKind.Local).AddTicks(3425),
+                            CreatedAt = new DateTime(2024, 10, 18, 14, 35, 12, 330, DateTimeKind.Local).AddTicks(2258),
                             MovieId = 1,
                             Rating = 5f,
                             UserId = "testuser1"
@@ -261,7 +264,7 @@ namespace Entities.Migrations
                         {
                             ReviewId = 2,
                             Comment = "An iconic masterpiece of cinema.",
-                            CreatedAt = new DateTime(2024, 10, 18, 14, 35, 54, 829, DateTimeKind.Local).AddTicks(3430),
+                            CreatedAt = new DateTime(2024, 10, 18, 14, 35, 12, 330, DateTimeKind.Local).AddTicks(2263),
                             MovieId = 2,
                             Rating = 5f,
                             UserId = "testuser2"

@@ -21,6 +21,18 @@ namespace Entities
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Movie>()
+            .HasOne(m => m.Genre)
+            .WithMany(g => g.Movies)
+            .HasForeignKey(m => m.GenreId);
+
+            modelBuilder.Entity<Review>()
+                .HasOne(r => r.Movie)
+                .WithMany(m => m.Reviews)
+                .HasForeignKey(r => r.MovieId);
+
+
             // Seed Genres
             modelBuilder.Entity<Genre>().HasData(
                 new Genre { GenreId = 1, Name = "Action" },
@@ -81,10 +93,9 @@ namespace Entities
                 }
             );
         }
-
-        public DbSet<TEntity> Set<TEntity>() where TEntity : class
+        public List<Movie> sp_GetAllMovies()
         {
-            throw new NotImplementedException();
+           return Movies.FromSqlRaw("EXEC GETALLMOVIES_FROM_VS").ToList();
         }
     }
 }

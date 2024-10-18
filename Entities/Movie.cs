@@ -15,6 +15,12 @@ namespace Entities
         public Genre? Genre { get; set; }
         [Display(Name = "Release Date")]
         public DateTime ReleaseDate { get; set; }
+
+        [Display(Name = "Average Rating")]
+        [Range(0, 5)]
+        [Required]
+        [DisplayFormat(DataFormatString = "{0:0.0}")]
+        [DataType(DataType.Currency)]
         public float AverageRating { get; set; }
         public List<Review>? Reviews { get; set; }
         public override string ToString()
