@@ -45,11 +45,16 @@ namespace Repositories
         }
 
 
+        //public async Task<IEnumerable<Movie>> GetAllAsync()
+        //{
+        //    _logger.LogInformation("Getting all movies  from the stored procedure");
+        //    //return await _db.Movies.Include(m => m.Genre).Include(m => m.Reviews).ToListAsync();
+        //    return  _db.sp_GetAllMovies();
+        //}
         public async Task<IEnumerable<Movie>> GetAllAsync()
         {
             _logger.LogInformation("Getting all movies  from the stored procedure");
-            //return await _db.Movies.Include(m => m.Genre).Include(m => m.Reviews).ToListAsync();
-            return  _db.sp_GetAllMovies();
+            return await _db.Movies.Include(g => g.Reviews).Include(r => r.Genre).ToListAsync();
         }
 
         public async Task<Movie>? GetByIdAsync(int id)

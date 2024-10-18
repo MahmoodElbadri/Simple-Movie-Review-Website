@@ -23,8 +23,8 @@
             <tr>
                 <th scope="row">@movie.MovieId</th>
                 <td>@movie.Title</td>
-                <td>@movie.Genre?.Name</td> <!-- Updated to show the Genre name -->
-                <td>@movie.ReleaseDate.ToString("d")</td> <!-- Updated for formatted date -->
+                <td>@movie.Genre</td>
+                <td>@movie.ReleaseDate.ToString("d")</td>
                 <td>@movie.AverageRating</td>
                 <td>
                     @if (movie.Reviews != null && movie.Reviews.Any())
@@ -32,13 +32,13 @@
                         <ul>
                             @foreach (var review in movie.Reviews)
                             {
-                                <li>@review.Comment</li> <!-- Changed from <p> to <li> for better structure -->
+                                <li>@review.Comment</li>
                             }
                         </ul>
                     }
                     else
                     {
-                        <span>No reviews</span> <!-- Added a fallback for no reviews -->
+                        <span>No reviews</span>
                     }
                 </td>
                 <td>

@@ -1,4 +1,5 @@
 ﻿using Entities.IdentityEntities;
+using Entities.Migrations;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,7 @@ namespace Entities
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Genre> Genres { get; set; }
+        public DbSet<MovieWithReviewsAndGenreDto> MovieWithReviewsAndGenreDtos { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
@@ -22,10 +24,13 @@ namespace Entities
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<MovieWithReviewsAndGenreDto>().HasNoKey();
+            modelBuilder.Entity<ReviewDto>().HasNoKey();
+
             modelBuilder.Entity<Movie>()
-            .HasOne(m => m.Genre)
-            .WithMany(g => g.Movies)
-            .HasForeignKey(m => m.GenreId);
+        .HasOne(m => m.Genre)
+        .WithMany(g => g.Movies)
+        .HasForeignKey(m => m.GenreId);
 
             modelBuilder.Entity<Review>()
                 .HasOne(r => r.Movie)
@@ -95,7 +100,23 @@ namespace Entities
         }
         public List<Movie> sp_GetAllMovies()
         {
-           return Movies.FromSqlRaw("EXEC GETALLMOVIES_FROM_VS").ToList();
+            return Movies.FromSqlRaw("EXEC GETALLMOVIES_FROM_VS").ToList();
         }
+        /*public async Task<List<Movie>> sp_GetAllMoviesWithReviewsAndGenre()
+        {/*
+            var movies = await this.Set<MovieWithReviewsAndGenreDto>()
+        .FromSqlRaw("EXEC GET_ALL_MOVIES_WITH_REVIEWS_AND_GENRE_FROM_VS")
+        .ToListAsync();*/
+            /*
+                        foreach (var movie in movies)
+                        {
+                            foreach (var review in movie.Reviews)
+                            {
+                                //review.Comment = review.Comment ?? "No comment"; // Provide a default value if null
+                                review.Rating = review.Rating ?? 0; // Provide a default value if null
+                            }
+                        }
+            return await Movies.Include(g => g.Reviews).Include(r => r.Genre).ToListAsync();
+        }*/
     }
 }

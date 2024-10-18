@@ -18,12 +18,12 @@
     </div>
     <div class="form-group">
         <label asp-for="Rating" class="control-label"></label>
-        <input asp-for="Rating" class="form-control" />
-        <span asp-validation-for="Rating" class="text-danger"></span>
+        <input asp-for="Rating" type="number" class="form-control" />
+        <span asp-validation-for="Rating"  class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Movie" class="control-label"></label>
-        <select asp-for="Movie"  class="form-select">
+        <label asp-for="MovieId" class="control-label"></label>
+        <select asp-for="MovieId"  class="form-select">
             <option value="">-- Select Movie --</option>
             @foreach (Movie movie in ViewBag.movies)
             {
@@ -32,11 +32,6 @@
         </select>
     </div>
 
-    @*<div class="form-group">
-    <label asp-for="Reviews" class="control-label"></label>
-    <textarea asp-for="Reviews" type="text" class="form-control"></textarea>
-    <span asp-validation-for="ReleaseDate" class="text-danger"></span>
-    </div> *@
     <button type="submit" class="btn btn-success mt-4 mb-4">Save</button>
     <div asp-validation-summary="All" class="text-danger"></div>
 </form>
