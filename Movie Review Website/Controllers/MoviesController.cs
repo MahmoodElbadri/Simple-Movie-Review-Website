@@ -25,7 +25,7 @@ public class MoviesController : Controller
     [HttpGet]
     [Route("/")]
     [ValidateSearch]
-    public async Task<IActionResult> Index(string? searchString)
+    public async Task<IActionResult> Index(string? searchString, string? genreString)
     {
         _logger.LogInformation("MoviesController - Index method invoked");
 
@@ -42,8 +42,16 @@ public class MoviesController : Controller
                 _logger.LogWarning("No movie found for the search string.");
                 return View("NotFound");
             }
-
+            ViewBag.searchString = searchString;
             return View("SearchResult", movie);
+        }
+        else if (!string.IsNullOrEmpty(genreString))
+        {
+            _logger.LogInformation($"Searching using Genre {genreString}");
+            IEnumerable<Movie> movies = await _movieService.GetAllMoviesAsync();
+            movies = movies.Where(tmp => tmp.Genre.Name.Contains(genreString, StringComparison.OrdinalIgnoreCase));
+            ViewBag.genreString = genreString;
+            return View(movies);
         }
 
         // If no search string, return all movies
@@ -68,7 +76,7 @@ public class MoviesController : Controller
         return View(movie);
     }
     [HttpPost]
-    public async Task<IActionResult> Edit(Movie movie,IFormFile? ImagePath)
+    public async Task<IActionResult> Edit(Movie movie, IFormFile? ImagePath)
     {
         if (ModelState.IsValid)
         {
@@ -83,7 +91,7 @@ public class MoviesController : Controller
             }
             try
             {
-               await _movieService.UpdateMovieAsync(movie);
+                await _movieService.UpdateMovieAsync(movie);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -151,5 +159,20 @@ public class MoviesController : Controller
         }
         ViewBag.genres = await _genreService.GetAllGenresAsync();
         return View(movie);
+    }
+    [HttpGet("{id}")]
+    public async Task<IActionResult> Details(int id)
+    {
+        _logger.LogInformation($"Getting Movie #{id}");
+        var movie = await _movieService.GetMovieByIdAsync(id);
+        if (movie == null || id == 0)
+        {
+            return View("NotFound");
+        }
+        else
+        {
+            return View(movie);
+        }
+
     }
 }
