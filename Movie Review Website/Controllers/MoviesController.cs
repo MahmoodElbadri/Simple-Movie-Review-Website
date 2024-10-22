@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Movie_Review_Website.Filters;
+using Rotativa.AspNetCore;
 using ServiceContracts;
 
 namespace Movie_Review_Website.Controllers;
@@ -173,6 +174,17 @@ public class MoviesController : Controller
         {
             return View(movie);
         }
+
+    }
+    [HttpGet]
+    public async Task<IActionResult> MoviesAsPDF()
+    {
+        IEnumerable<Movie> movies = await _movieService.GetAllMoviesAsync();
+        return new ViewAsPdf("MoviesAsPdf", movies, ViewData)
+        {
+            PageMargins = new Rotativa.AspNetCore.Options.Margins(top: 20, left: 20, bottom: 20, right: 20),
+            PageOrientation = Rotativa.AspNetCore.Options.Orientation.Landscape,
+        };
 
     }
 }
